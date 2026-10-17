@@ -1,0 +1,65 @@
+# Python environments, caches and test output.
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+test-results/
+junit*.xml
+
+# Private configuration and credentials.
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+credentials*.json
+*.pem
+*.key
+
+# Every existing SQLite file is generated runtime state; schema and CSV inputs are versioned.
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.sqlite3-journal
+/data/runtime/
+/data/backups/
+/data/replay/
+/data/replays/
+/data/workspaces/
+# Optional private imports; the six audited public inputs live in data/synthetic/.
+/data/raw/
+
+# Generated reports, screenshots, exports, local work and logs.
+/outputs/
+/output/
+/reports/
+/exports/
+/screenshots/
+/work/
+/tmp/
+/downloads/
+*.log
+*.tmp
+*.bak
+
+# Local editor and operating-system state.
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

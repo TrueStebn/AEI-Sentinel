@@ -1,0 +1,8 @@
+{
+  "antibiotics.csv": "42589cf02942e3ea743b812bfdccc3c04b5e0a8f8a59367c4a2cb0b7a104aebf",
+  "cultures.csv": "9bc971fb8e40e7ca1978cab279bed9d5c6cf93bd3accf3deff6ca0bb88b7d7a8",
+  "isolates.csv": "c8a31b6e1bd8610fb18fa4dfc4e411fbfaa963b8ae2169ebc38ac1e43bf1afc6",
+  "patients.csv": "595ce2589cf5c46e18a3525562a3aec517d05d389a5ec48ec2e958b3136c6bd2",
+  "susceptibility.csv": "2493469d95fb747611de42bee1849ea0ec9dede675573f8c5af5f09ecfdac552",
+  "wards.csv": "b9f33cb411758331d69a4850fb29ff9e49366692a1bcaa6fc9ac3ebfb35276c0"
+}

@@ -1,0 +1,3 @@
+* text=auto eol=lf
+# Preserve supplied synthetic CSV bytes, including their original line endings.
+*.csv -text

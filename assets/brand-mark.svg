@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AEI Sentinel mark">
+  <rect width="64" height="64" rx="16" fill="#142C48"/>
+  <path d="M32 10 49 17v15c0 11-8 19-17 23-9-4-17-12-17-23V17Z" fill="none" stroke="#F4F7FB" stroke-width="2.5"/>
+  <path d="M19 33h8l4-10 6 19 4-9h7" fill="none" stroke="#58C5C2" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
