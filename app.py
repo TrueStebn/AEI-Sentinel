@@ -15,6 +15,7 @@ from src.replay_interface import select_data_source,show_update,refresh_watcher
 from src.workspace_interface import autosave_workspace,bootstrap_workspace,render_workspace
 from src.ux_state import normalize_route,validate_context,go,enter_reports
 from src.workspaces import PAGES
+from src.runtime_policy import public_demo
 
 
 def _destination_changed():
@@ -26,6 +27,19 @@ def _destination_changed():
 
 def main():
     st.set_page_config(page_title='AEI Sentinel',page_icon=str(MARK),layout='wide',initial_sidebar_state='expanded')
+    if public_demo():
+        from src.demo_limits import resource_slot, DemoBusy
+        try:
+            with resource_slot('browse'):
+                _render_app()
+        except (DemoBusy, OSError, ValueError):
+            st.info('The local demo is busy or its shared request budget is exhausted. Retry shortly or contact the owner.')
+            st.button('Retry demo')
+    else:
+        _render_app()
+
+
+def _render_app():
     apply_style()
     st.session_state['_shared_date_rendered']=False
     with st.sidebar.container(horizontal=True,wrap=False,vertical_alignment='center'):
@@ -33,13 +47,16 @@ def main():
         st.markdown('**AEI Sentinel**')
     try:
         primary=get_settings()
+        if public_demo():
+            from src.demo_assets import public_settings
+            primary=public_settings(primary)
         initialize_database(primary)
         if not bootstrap_workspace(primary):
             return
         with connect(primary,read_only=True) as con:
             st.session_state['_laboratory_version']=con.execute('SELECT version FROM data_version WHERE singleton_id=1').fetchone()[0]
     except (sqlite3.Error,OSError,RuntimeError,ValueError) as exc:
-        st.error(f'Unable to initialize the local workspace. {exc}')
+        st.error('Public demo initialization is unavailable. Ask the owner to verify the prepared snapshots.' if public_demo() else f'Unable to initialize the local workspace. {exc}')
         return
     normalize_route(st.session_state)
     st.session_state['_destination']=st.session_state['navigation']
@@ -51,7 +68,7 @@ def main():
     admin_slot=st.container() if page=='Data & Settings' else None
     if admin_slot is not None:
         admin_slot.subheader('Data & Settings')
-        admin_slot.caption('Choose a source, control Replay, or manage a private workspace. These are unauthenticated local demonstration controls.')
+        admin_slot.caption('Choose a read-only synthetic source. Scenario progress is temporary for this browser session.' if public_demo() else 'Choose a source, control Replay, or manage a private workspace. These are unauthenticated local demonstration controls.')
     save_status=render_workspace(primary,target=admin_slot,controls=page=='Data & Settings')
     try:
         settings,controller=select_data_source(primary,target=admin_slot,controls=page=='Data & Settings')
@@ -61,7 +78,7 @@ def main():
         catalog=load_catalog(settings)
         validate_context(st.session_state,catalog)
     except (sqlite3.Error,OSError,RuntimeError,ValueError) as exc:
-        st.error(f'Unable to load the laboratory database. Check the configuration and retry. {exc}')
+        st.error('The selected public-demo source is unavailable. Please retry or contact the owner.' if public_demo() else f'Unable to load the laboratory database. Check the configuration and retry. {exc}')
         return
     with header_slot:
         header(catalog)
@@ -86,11 +103,14 @@ def main():
     except DatasetChangedError as exc:
         st.warning(str(exc))
     except (sqlite3.Error,OSError,RuntimeError,ValueError) as exc:
-        st.error(f'Unable to complete this request. {exc}')
+        st.error('This public-demo request could not be completed. Retry or use a smaller investigation scope.' if public_demo() else f'Unable to complete this request. {exc}')
     st.sidebar.divider()
-    st.sidebar.caption('Synthetic data · Local demonstration · No authentication')
+    st.sidebar.caption('Synthetic data · Public Demo Mode · Temporary session' if public_demo() else 'Synthetic data · Local demonstration · No authentication')
     autosave_workspace(save_status)
-    refresh_watcher(settings,catalog.version,catalog.last_successful_import,controller)
+    # Do not register a browser timer for immutable public snapshots. An early
+    # return inside the fragment still sends a WebSocket rerun every second.
+    if not public_demo():
+        refresh_watcher(settings,catalog.version,catalog.last_successful_import,controller)
 
 
 if __name__=='__main__':

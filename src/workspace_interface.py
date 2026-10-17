@@ -43,6 +43,12 @@ def _decode_preferences(values):
 
 
 def apply_workspace(primary, record, state):
+    from src.runtime_policy import public_demo
+    if public_demo():
+        raise RuntimeError('Persistent workspace restoration is disabled in Public Demo Mode.')
+    for name in list(st.session_state):
+        if name.startswith('_smart_'):
+            st.session_state.pop(name, None)
     for controller in st.session_state.get("replay_controllers", {}).values():
         controller.pause()
         controller.lease.close()
@@ -74,6 +80,10 @@ def _queue_restore(token):
 
 def bootstrap_workspace(primary):
     """Run before creating filter/navigation widgets so restoration can set values."""
+    from src.runtime_policy import public_demo
+    if public_demo():
+        from src.public_demo_interface import bootstrap_public_session
+        return bootstrap_public_session()
     try:
         store = st.session_state.get("_workspace_store")
         if store is None:
@@ -118,6 +128,9 @@ def bootstrap_workspace(primary):
 
 
 def autosave_workspace(status=None):
+    from src.runtime_policy import public_demo
+    if public_demo():
+        return True
     message, saved_stamp = status if isinstance(status, tuple) else (status, None)
     store = st.session_state.get("_workspace_store")
     if store is None:
@@ -145,6 +158,10 @@ def autosave_workspace(status=None):
 
 
 def render_workspace(primary, *, target=None, controls=True):
+    from src.runtime_policy import public_demo
+    if public_demo():
+        from src.public_demo_interface import public_workspace_notice
+        return public_workspace_notice(target, controls)
     store = st.session_state["_workspace_store"]
     token = st.session_state["_workspace_token"]
     ui = target or st.sidebar

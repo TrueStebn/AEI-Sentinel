@@ -45,6 +45,8 @@ def unit_cards(units):
 
 
 def render_overview(settings,catalog):
+    from src.smart_search_interface import render_smart_search
+    render_smart_search(settings,catalog)
     report=build_overview(settings,catalog=catalog,as_of_date=st.session_state.get('analysis_date'),
         expected_version=catalog.version,source=st.session_state.get('data_source','Laboratory Dataset'),
         signal_threshold=st.session_state.get('signal_threshold',settings.signal_minimum_change_pp))

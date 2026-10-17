@@ -58,6 +58,13 @@ credentials*.json
 *.tmp
 *.bak
 
+# Local inference weights and caches are installed outside source control.
+/.ollama/
+/models/
+/ollama-cache/
+*.gguf
+*.safetensors
+
 # Local editor and operating-system state.
 .idea/
 .vscode/

@@ -108,6 +108,9 @@ class ReplaySession:
     """
 
     def __init__(self, primary: Settings, plan: ReplayPlan, *, owner_key=None):
+        from src.runtime_policy import public_demo
+        if public_demo():
+            raise RuntimeError('Writable Replay is disabled in Public Demo Mode. Use predefined scenario snapshots.')
         self.primary = primary
         self.plan = plan
         self.directory = primary.database_path.parent / "replay" / uuid4().hex
@@ -122,6 +125,9 @@ class ReplaySession:
         self._new_database()
 
     def _new_database(self):
+        from src.runtime_policy import public_demo
+        if public_demo():
+            raise RuntimeError('Writable Replay is disabled in Public Demo Mode.')
         target = self.directory / f"{uuid4().hex}.db"
         protected = [self.primary.database_path, PROJECT_ROOT / "data/runtime/aei.db"]
         if self.plan.source:
@@ -153,6 +159,9 @@ class ReplaySession:
 
     @classmethod
     def recover(cls, primary, saved, owner_key):
+        from src.runtime_policy import public_demo
+        if public_demo():
+            raise RuntimeError('Replay recovery is disabled in Public Demo Mode.')
         validate_state({"format": 1, "replays": {saved["mode"]: saved}})
         target = replay_path(primary, saved["path"])
         if not target.is_file():

@@ -229,6 +229,9 @@ def _record_failure(settings, origin, message, metadata):
 
 def import_csv_bundle(files: dict[str, bytes], settings: Settings | None = None,
                       origin: str = "csv_upload", expect_original: bool = False) -> ImportResult:
+    from src.runtime_policy import public_demo
+    if public_demo():
+        raise RuntimeError('Public Demo Mode is read-only. CSV imports are disabled.')
     settings = settings or get_settings()
     initialize_database(settings)
     metadata = []
@@ -265,6 +268,9 @@ def import_csv_bundle(files: dict[str, bytes], settings: Settings | None = None,
 
 def import_directory(directory: Path, settings: Settings | None = None,
                      expect_original: bool = False) -> ImportResult:
+    from src.runtime_policy import public_demo
+    if public_demo():
+        raise RuntimeError('Public Demo Mode is read-only. CSV imports are disabled.')
     settings = settings or get_settings()
     try:
         files = {f"{table}.csv": (Path(directory) / f"{table}.csv").read_bytes() for table in ORDER}

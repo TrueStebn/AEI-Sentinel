@@ -1,5 +1,7 @@
 # AEI Sentinel: 110-second local demonstration
 
+For the protected Public Demo process, first follow [Windows preparation/startup](DEPLOYMENT.md). Use only the predefined three-step scenario; Historical Replay, imports and persistent workspaces are unavailable there. Warm the pinned Qwen3 8B model locally before the presentation and keep Manual Search available. Leave GPU capacity free for the model; competing games/renderers can exhaust VRAM and cause bounded inference timeouts. The instructions below otherwise describe the original Developer Mode workflow.
+
 ## Prepare
 
 - Follow the [README](../README.md), import the six original synthetic CSVs, and run `python -m streamlit run app.py --server.address 127.0.0.1` inside the virtual environment.

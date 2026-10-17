@@ -12,6 +12,10 @@ MODES = [LABORATORY, HISTORICAL, SCENARIO]
 
 
 def select_data_source(primary, *, target=None, controls=True):
+    from src.runtime_policy import public_demo
+    if public_demo():
+        from src.public_demo_interface import source_selection
+        return source_selection(primary, target=target, controls=controls)
     from src.workspace_interface import autosave_workspace
     ui = target or st.sidebar
     mode = ui.selectbox("Data Source", MODES, key="data_source") if controls else st.session_state.setdefault('data_source',LABORATORY)
@@ -108,6 +112,9 @@ def show_update(settings, catalog):
 @st.fragment(run_every=1.0)
 def refresh_watcher(settings, expected_version, expected_import, controller):
     """A timer checks once, then yields. No blocking polling loop or global state."""
+    from src.runtime_policy import public_demo
+    if public_demo():
+        return  # Prepared immutable snapshots have no revisions to poll or replay writers.
     try:
         from src.workspace_interface import autosave_workspace
         if st.session_state.get("workspace_save_error"):

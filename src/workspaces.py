@@ -164,6 +164,9 @@ class Workspace:
 
 class WorkspaceStore:
     def __init__(self, primary):
+        from src.runtime_policy import public_demo
+        if public_demo():
+            raise RuntimeError('Persistent workspaces are disabled in Public Demo Mode.')
         self.primary = primary
         path = (primary.workspace_database_path or primary.database_path.parent / "workspaces.db").resolve()
         if path in (primary.database_path.resolve(), (PROJECT_ROOT / "data/runtime/aei.db").resolve()) or (path.exists() and primary.database_path.exists() and path.samefile(primary.database_path)):

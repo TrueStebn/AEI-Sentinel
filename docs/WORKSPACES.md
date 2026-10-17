@@ -1,5 +1,7 @@
 # Workspace persistence, autosave and recovery
 
+This guide describes Developer Mode. In Public Demo Mode, persistent workspaces, autosave, restore URLs and sharing are disabled at the storage layer. URL preferences/tokens are ignored; only temporary browser-session state is used. See [Deployment](DEPLOYMENT.md).
+
 AEI Sentinel is a local hackathon prototype using synthetic data. A restore token is a bearer credential for a demonstration workspace. It is not hospital authentication, identity verification, role-based clinical access or encryption.
 
 ## Storage and private restore links

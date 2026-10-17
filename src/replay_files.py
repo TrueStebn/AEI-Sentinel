@@ -84,6 +84,9 @@ def _owned(primary, path, owner):
 
 
 def cleanup_replays(store, token, *, confirmed=False):
+    from src.runtime_policy import public_demo
+    if public_demo():
+        raise RuntimeError('Persistent Replay cleanup is disabled in Public Demo Mode.')
     """Preview or remove only this identity's unreferenced, inactive generations.
 
     Hold the workspace writer lock across reference checks and deletion so an

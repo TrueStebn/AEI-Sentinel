@@ -6,7 +6,7 @@ AEI Sentinel is a Python application for exploring antimicrobial resistance in s
 
 ## What the application provides
 
-- **Overview:** healthcare-unit activity, descriptive findings and original statistically supported alerts.
+- **Overview:** local AI Smart Search with an optional AI-free manual form, healthcare-unit activity, descriptive findings and original statistically supported alerts.
 - **Explore:** resistance trends, custom periods, a ward/antibiotic heatmap, phenotype monitoring, patient groups and focused investigations.
 - **Reports:** the current investigation, department-focused briefings, hospital-wide summaries and aggregate PDFs.
 - **Data & Settings:** local CSV imports, isolated Replay, workspace autosave and recovery.
@@ -43,6 +43,10 @@ python3.12 -m venv .venv
 
 Open [localhost:8501](http://localhost:8501). The initial import inserts 253,766 source rows at revision 1. Reimporting the same bundle inserts no duplicates and leaves the revision unchanged. An empty database can also be opened directly; the application initializes its schema and shows an explicit empty state.
 
+## Smart Search
+
+On Overview, type an English surveillance question and press Enter or Search. For example: "Show E. coli resistance to ciprofloxacin in Urology among patients aged 65 and older during the last 28 days." A local Ollama model interprets filters; the existing analytical engines calculate results. Review the recognised parameters and open the same cohort in Detailed Investigation. **Build a query manually** remains available without AI. No cloud API key or patient-record transmission is required. See [local model startup and supported requests](docs/SMART_SEARCH.md), [measured model comparison](docs/SMART_SEARCH_BENCHMARK.md) and [public-demo safeguards](docs/DEPLOYMENT.md).
+
 ## The six original synthetic CSVs
 
 The byte-preserved inputs are included in [`data/synthetic/`](data/synthetic/README.md). Finnish source labels remain unchanged. No runtime database, patient-derived export, private workspace or Replay state is included.
@@ -68,7 +72,9 @@ Resistance is `100 × R / (S + R)` among first isolates selected per patient, or
 
 The current 28 days and historical 365-day anomaly baseline do not overlap; the rolling annual display overlaps current. Descriptive preliminary signals differ from statistically supported alerts. Independent-sample Fisher tests require adequate counts and no detected patient dependence; the original scan applies Benjamini-Yekutieli correction. Patient-aware exact McNemar and restricted sensitivity results are additional exploratory evidence, not new global alerts. Repeated exploration, unmeasured confounding and synthetic-data limitations remain. Detailed [statistical documentation](docs/README.md) explains these rules.
 
-**Run this version locally with synthetic data. It is not ready for unrestricted public hosting.** Expert Mode is presentation, not authorization: shared CSV writes remain available without authentication. Private restore URLs are bearer credentials. SQLite/workspace/Replay storage needs a persistent host filesystem, which Community Cloud does not guarantee. Public-demo blockers and required safeguards are listed in [Deployment](docs/DEPLOYMENT.md) and [Security](SECURITY.md).
+**An owner-operated synthetic demo is available at [AEI Sentinel](https://secular-bundle-uncapped.ngrok-free.dev/).** ngrok Free may first show a Visit Site button; no registration is required. Availability depends on the owner PC, network and provider quotas. The bounded Windows deployment uses a dedicated standard account, kernel resource limits and shared HTTP/WebSocket admission controls. See [public hosting, verified behavior and shutdown](docs/PUBLIC_HOSTING.md).
+
+Developer mode retains local imports/workspaces and must remain private. `AEI_PUBLIC_DEMO=1` uses verified immutable synthetic snapshots, temporary visitor state, predefined Replay and shared AI/analytics budgets; persistent restoration and imports are disabled below the UI. Only pinned Qwen3 8B/Q4_K_M is accepted. [Start-PublicDemo.ps1](Start-PublicDemo.ps1) is the [local-only baseline](docs/DEPLOYMENT.md); it does not provide the dedicated-account isolation required for the public endpoint. See [Security](SECURITY.md).
 
 ## Tests and project structure
 

@@ -39,6 +39,9 @@ def view_choice(label,options,name):
 
 
 def render_explore(settings,catalog):
+    if st.button('Smart Search', key='_explore_smart_search', type='tertiary'):
+        go('Overview')
+        st.rerun()
     st.html('<div class="aei-kicker">Explore</div>')
     st.caption('Select Context → Examine Patterns → Investigate → Review Evidence')
     view=view_choice('Explore view',EXPLORE_VIEWS,'explore_view')
@@ -109,6 +112,10 @@ def render_reports(settings,catalog):
 
 
 def render_settings(settings,catalog,controller):
+    from src.runtime_policy import public_demo
+    if public_demo() and controller is None:
+        st.info('Public-demo policy: the shared laboratory source is read-only. Prepare imports in a separate local developer process.')
+        return
     if controller:
         st.info('Replay databases accept only their planned replay batches. Switch Data Source to Laboratory Dataset for shared CSV imports.')
     elif expert():

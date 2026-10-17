@@ -1,5 +1,7 @@
 # Continuous updates and isolated replay
 
+This guide describes Developer Mode. Public Demo Mode disables imports, writable/historical Replay and revision-watcher polling, and substitutes four owner-prepared immutable scenario snapshots with an independent visitor cursor. See [Deployment](DEPLOYMENT.md).
+
 Replay recovery uses durable token-scoped workspaces, validated paused restoration and conservative owned-file cleanup. See [Workspaces and recovery](WORKSPACES.md).
 
 All supplied laboratory observations and the additional demonstration scenario are synthetic. The application provides exploratory surveillance, not treatment advice or confirmation of a clinical outbreak.

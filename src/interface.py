@@ -307,6 +307,10 @@ def _run_import(callback):
 
 
 def render_management(settings, catalog):
+    from src.runtime_policy import public_demo
+    if public_demo():
+        st.info('Public Demo Mode: synthetic sources are read-only. Imports and persistent storage are disabled.')
+        return
     st.title("Data management")
     st.write("Review the shared laboratory dataset and import validated source files.")
     st.warning("Local demonstration only: imports have no authentication and modify the shared laboratory database. "
