@@ -63,7 +63,7 @@ Ward policy follows the supplied database design: filtering one ward selects the
 | `minimum_sample_size` | Applied configured threshold |
 | `data_version` | Source revision from the same read snapshot as the counts |
 
-The engine preserves the unrounded percentage. A future UI may round for display while retaining counts. `ok` means the sample-size rule was met; it is not a significance test, confidence interval or clinical reliability claim.
+The engine preserves the unrounded percentage; presentation layers may round the displayed value without changing counts. `ok` means the sample-size rule was met; it is not a significance test, confidence interval or clinical reliability claim.
 
 The default threshold is 30 in `Settings.minimum_sample_size`. Override it with `AEI_MINIMUM_SAMPLE_SIZE` or a supplied `Settings` instance. Only integers of at least 30 are accepted. The threshold is applied to tested first isolates, not all raw cultures, all raw tests or all selected but untested first isolates.
 
@@ -80,7 +80,7 @@ For reference date `d`:
 - Recent: `[d - 27 days, d]`, exactly 28 days.
 - Annual: `[d - 364 days, d]`, exactly 365 days, including when a leap day is present. This is not the current calendar year or a 366-day interval.
 
-The recent and annual periods overlap, and first-isolate selection is recomputed independently in each. Their percentages can have different selected patients/isolates. Future anomaly detection must request a separate historical baseline ending before the recent window begins.
+The recent and annual periods overlap, and first-isolate selection is recomputed independently in each. Their percentages can have different selected patients/isolates. The anomaly detector uses a separate historical baseline ending before the recent window begins.
 
 `ResistanceTimeSeries` contains frequency, overall inclusive bounds, applied filters, sample threshold, data revision and a chronological tuple of `ResistanceResult` points:
 

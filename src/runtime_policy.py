@@ -1,4 +1,4 @@
-"""Server-side write policy for an explicitly configured future demo process."""
+"""Server-side write policy selected by the AEI_PUBLIC_DEMO runtime flag."""
 
 import os
 

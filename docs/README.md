@@ -19,7 +19,7 @@ These guides describe the current application. They are organized by topic rathe
 | [Continuous updates](CONTINUOUS_UPDATES.md) | Append-only imports, revision refresh and isolated Replay |
 | [Workspaces](WORKSPACES.md) | Autosave, private restore tokens, recovery and safe cleanup |
 | [Demo runbook](DEMO_RUNBOOK.md) | Timed synthetic demonstration and fallback procedure |
-| [Local deployment](DEPLOYMENT.md) | Phase 15 local-only launcher and optional authenticated hosting checklist |
+| [Local deployment](DEPLOYMENT.md) | Local-only launcher, operating modes and security boundaries |
 | [Public hosting](PUBLIC_HOSTING.md) | Owner-approved ngrok demo, isolated Windows account, kernel/admission limits, external checks and emergency shutdown |
 | [Security](../SECURITY.md) | Publication boundaries and operating precautions |
 

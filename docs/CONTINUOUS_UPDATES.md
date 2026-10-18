@@ -94,7 +94,7 @@ After the third step: revision 3, recent 40/100 = **40%**, annual 50/200 = **25%
 - Replay failures pause the controller and preserve its last commit. Retrying a committed packet is idempotent. Reset creates an independent clean run; historical source changes require reset.
 - Controllers are reconstructed from validated workspace descriptors after reconnect/server restart and always recover paused. Recovery requires the same durable files and source revision. Use the owned-file cleanup preview; do not delete unknown, referenced or active Replay generations.
 - Timer refresh is connected-browser, real-time-like behavior, not a background ingestion scheduler or guaranteed real-time service. SQLite lock timeouts can require retry. Full analysis and validation costs increase with data volume; there is no distributed analytical cache or database migration.
-- CSV packets remain a six-file interface. Culture/isolates arrive consistently; corrections of existing laboratory results need a future audited workflow. Real hospital connectors, production authentication, an AI assistant, database migration and an automatic backup policy are not implemented. Persistent workspaces are supported on durable local storage.
+- CSV packets use a six-file interface. Corrections to committed laboratory observations are not supported. Real hospital connectors, production authentication, database migration and automatic backups are outside this prototype. Persistent workspaces require durable local storage.
 
 ## Validation
 

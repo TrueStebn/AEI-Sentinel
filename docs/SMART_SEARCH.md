@@ -73,6 +73,6 @@ python -m tools.score_smart_search outputs/benchmark-8b.json
 
 The live tool now accepts only pinned 8B. The earlier 4B comparison is historical evidence, not a supported runtime alternative. Saved responses can be rescored without loading models. Reports distinguish raw extraction from validated accuracy, count withheld valid requests as incorrect, and retain timing/resource evidence. This is development-set evaluation, not clinical validation. Outputs are ignored by Git. For Public Demo Mode use the isolated [startup script](DEPLOYMENT.md), not the developer command above.
 
-## Future public demo
+## Public demo
 
-See [deployment protections and remaining blockers](DEPLOYMENT.md). Keep both services bound to loopback. No tunnel, firewall change, router change or public deployment is included in Smart Search.
+The owner-operated public demo is documented in [Public hosting](PUBLIC_HOSTING.md). Smart Search itself does not configure external access. The application and local model remain bound to loopback; the approved tunnel provides the public HTTPS endpoint.
