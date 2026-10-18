@@ -85,7 +85,3 @@ Developer mode retains local imports/workspaces and must remain private. `AEI_PU
 On macOS/Linux use `.venv/bin/python`. Tests use temporary databases; bundled-data checks verify counts and first-isolate reference results. Import the original bundle first to enable the working-database read-only integration checks. For development with version ranges, install `requirements-dev.txt` instead of the lock file.
 
 `app.py` is the entry point; `src/` contains analytical services and presentation, `db/schema.sql` is the schema, `tests/` contains regressions, `assets/` contains the local brand mark, and `docs/` contains current technical explanations. Generated artifacts are ignored. Start with the [documentation index](docs/README.md).
-
-## License
-
-No software license has been selected. No license file is added to this publication candidate.
